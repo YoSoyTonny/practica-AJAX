@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Practica AJAX</title>
+</head>
+<body>
+    <select id="slcPaises">
+        
+    </select>
+    <button id="btnCargarPaises">cargar paises</button>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous">
+</script>
+
+<script>
+    //Limpiar el select
+    //Hacer la llamada al json de paises
+    //llenar el select con la respuesta
+    function doClickCargarPaises(e){
+        $("#slcPaises").empty();
+        //GET
+        $.ajax( "paises.json" ) //Direccion URL
+            .done(function(data) { // si hau respuesta exitosa
+                //llenar el select
+                for(var i=0; i < data.length; i++) {
+                    $("#slcPaises").append(
+                        "<option>" + data[i].name + "</option>");
+                }
+                
+            })
+            .fail(function() { //si hay error
+                alert( "error" );
+            })
+            .always(function() { //SIEMPRE despues de done o fail
+                alert( "complete" );
+            });
+
+
+    }
+
+    //Funcion que se ejecuta una vez que carga todo. La hicimos mediante JQuery
+    $(function () {
+        //Codigo de aqui se ejecuta ya que cargo todo
+        
+        
+        //Toma el boton asignale un listener de un click
+        //Respode al evento click con la funcion parametro
+        $("#btnCargarPaises").click(doClickCargarPaises) ;
+    });
+</script>
+
+</body>
+</html>
